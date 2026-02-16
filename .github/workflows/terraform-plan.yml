@@ -7,7 +7,7 @@ on:
 
 jobs:
   plan-dev:
-    uses: ./reusable-terraform.yml
+    uses: omarionay/aws-terraform-cicd-github/.github/workflows/reusable-terraform.yml
     with:
       environment: dev
       action: plan
