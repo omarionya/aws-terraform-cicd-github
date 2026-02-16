@@ -1,0 +1,11 @@
+name: Terraform Plan
+
+on:
+  pull_request:
+
+jobs:
+  plan-dev:
+    uses: ./.github/workflows/reusable-terraform.yml
+    with:
+      environment: dev
+      action: plan

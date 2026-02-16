@@ -1,0 +1,14 @@
+name: Terraform Apply
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  apply-prod:
+    environment: production
+    uses: ../.github/workflows/reusable-terraform.yml
+    with:
+      environment: prod
+      action: apply
