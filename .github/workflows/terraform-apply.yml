@@ -7,7 +7,7 @@ on:
 
 jobs:
   call-reusable:
-    uses: ./reusable-terraform.yml
+    uses: ./.github/workflowsreusable-terraform.yml
     with:
       environment: prod
       action: apply
