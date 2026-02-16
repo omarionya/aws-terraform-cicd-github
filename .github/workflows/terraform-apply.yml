@@ -7,7 +7,7 @@ on:
 
 jobs:
   apply-prod:
-    uses: omarionya/aws-terraform-cicd-github/.github/workflows/reusable-terraform.yml
+    uses: ./.github/workflows/reusable-terraform.yml
     with:
       environment: prod
       action: apply
