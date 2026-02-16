@@ -1,0 +1,24 @@
+name: Terraform Destroy
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "Environment to destroy"
+        required: true
+        type: choice
+        options:
+          - dev
+          - prod
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  destroy:
+    uses: ./.github/workflows/reusable-terraform.yml
+    with:
+      environment: ${{ inputs.environment }}
+      action: destroy
+    secrets: inherit
