@@ -11,4 +11,5 @@ jobs:
     with:
       environment: dev
       action: plan
-    secrets: inherit
+    secrets:
+      inherit

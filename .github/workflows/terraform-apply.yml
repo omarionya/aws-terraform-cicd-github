@@ -1,4 +1,4 @@
-name: Terraform Apply
+name: Terraform Apply Prod
 
 on:
   push:
@@ -6,9 +6,10 @@ on:
       - main
 
 jobs:
-  call-reusable:
+  apply-prod:
     uses: ./.github/workflows/reusable-terraform.yml
     with:
       environment: prod
       action: apply
-    secrets: inherit
+    secrets:
+      inherit
