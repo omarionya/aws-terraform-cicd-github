@@ -48,3 +48,9 @@ jobs:
         if: inputs.action == 'apply'
         run: terraform apply -auto-approve
         working-directory: environments/${{ inputs.environment }}
+
+      - name: Terraform Destroy
+        if: inputs.action == 'destroy'
+        run: terraform destroy -auto-approve
+        working-directory: environments/${{ inputs.environment }}
+
