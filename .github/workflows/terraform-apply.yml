@@ -11,3 +11,4 @@ jobs:
     with:
       environment: prod
       action: apply
+    secrets: inherit
