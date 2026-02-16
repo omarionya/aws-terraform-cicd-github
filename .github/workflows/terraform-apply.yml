@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  apply-prod:
+  call-reusable:
     environment: production
     uses: ../.github/workflows/reusable-terraform.yml
     with:
