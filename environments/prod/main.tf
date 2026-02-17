@@ -1,7 +1,3 @@
-variable "region" {
-  default = "us-east-1"
-}
-
 module "vpc" {
   source = "../../modules/vpc"
   environment = "prod"
