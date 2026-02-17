@@ -47,11 +47,13 @@ jobs:
         run: tflint --init && tflint
         working-directory: environments/${{ inputs.environment }}
 
-      # ---- TFSEC ----
-      - name: Run tfsec
-        uses: aquasecurity/tfsec-action@v1.0.3
+      - name: Run Trivy IaC Scan
+        uses: aquasecurity/trivy-action@0.20.0
         with:
-          working_directory: environments/${{ inputs.environment }}
+          scan-type: 'config'
+          scan-ref: '.'
+          severity: 'HIGH,CRITICAL'
+          exit-code: '1'
 
       - name: Terraform Plan
         if: inputs.action == 'plan'
