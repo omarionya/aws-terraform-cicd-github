@@ -25,7 +25,7 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
 
-      # - name: Configure AWS Credentials (OIDC)
+      - name: Configure AWS Credentials (OIDC)
       #   uses: aws-actions/configure-aws-credentials@v2
       #   with:
       #     role-to-assume: arn:aws:iam::ACCOUNT-ID:role/ROLE-NAME
@@ -56,11 +56,11 @@ jobs:
           exit-code: '1'
 
       - name: Terraform Plan
-        if: inputs.action == 'plan'
-        run: terraform plan
-        working-directory: environments/${{ inputs.environment }}
+        # if: inputs.action == 'plan'
+        # run: terraform plan
+        # working-directory: environments/${{ inputs.environment }}
 
-      # - name: Terraform Apply
+      - name: Terraform Apply
       #   if: inputs.action == 'apply' && github.ref == 'refs/heads/main'
       #   run: terraform apply -auto-approve
       #   working-directory: environments/${{ inputs.environment }}
