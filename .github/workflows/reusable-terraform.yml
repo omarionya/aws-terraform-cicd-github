@@ -26,10 +26,10 @@ jobs:
         uses: hashicorp/setup-terraform@v2
 
       - name: Configure AWS Credentials (OIDC)
-        uses: aws-actions/configure-aws-credentials@v2
-        with:
-        role-to-assume: arn:aws:iam::ACCOUNT-ID:role/ROLE-NAME
-        aws-region: us-east-1
+        # uses: aws-actions/configure-aws-credentials@v2
+        # with:
+        # role-to-assume: arn:aws:iam::ACCOUNT-ID:role/ROLE-NAME
+        # aws-region: us-east-1
 
       - name: Terraform Init (skip backend)
         run: terraform init -backend=false
