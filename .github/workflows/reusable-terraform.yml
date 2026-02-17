@@ -31,8 +31,8 @@ jobs:
       #     role-to-assume: arn:aws:iam::ACCOUNT-ID:role/ROLE-NAME
       #     aws-region: us-east-1
 
-      - name: Terraform Init
-        run: terraform init
+      - name: Terraform Init (skip backend)
+        run: terraform init -backend=false
         working-directory: environments/${{ inputs.environment }}
 
       - name: Terraform Validate
