@@ -27,7 +27,7 @@ resource "aws_kms_key" "cw_logs" {
 resource "aws_cloudwatch_log_group" "vpc_flow_logs" {
   name              = "/aws/vpc/flow-logs"
   retention_in_days = 30
-  kms_key_id        = aws_kms_key.cw_logs.id
+  kms_key_id        = aws_kms_key.cw_logs.arn
 }
 
 resource "aws_flow_log" "vpc_flow" {
