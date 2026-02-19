@@ -75,10 +75,33 @@ resource "aws_iam_role" "flow_logs_role" {
   })
 }
 
-resource "aws_iam_role_policy_attachment" "flow_logs_attach" {
-  role       = aws_iam_role.flow_logs_role.name
-  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonVPCFlowLogsRole"
+# trivy:ignore:AVD-AWS-0057
+data "aws_iam_policy_document" "flow_logs_policy_doc" {
+  statement {
+    sid    = "AllowWriteToSpecificLogGroup"
+    effect = "Allow"
+
+    actions = [
+      "logs:CreateLogStream",
+      "logs:PutLogEvents"
+    ]
+
+    resources = [
+      "${aws_cloudwatch_log_group.vpc_flow_logs.arn}:*"
+
+    ]
+  }
 }
+
+
+resource "aws_iam_role_policy" "flow_logs_policy" {
+  name   = "vpc-flow-logs-policy"
+  role   = aws_iam_role.flow_logs_role.id
+  policy = data.aws_iam_policy_document.flow_logs_policy_doc.json
+}
+
+
+
 
 resource "aws_flow_log" "vpc_flow" {
   vpc_id               = aws_vpc.this.id
