@@ -31,13 +31,29 @@ jobs:
           role-to-assume: arn:aws:iam::919466768129:role/allow-github-actions
           aws-region: us-east-1
 
-      - name: Terraform Init
-        run: terraform init
+      - name: Terraform Init (skip backend)
+        run: terraform init -reconfigure
         working-directory: environments/${{ inputs.environment }}
 
       - name: Terraform Validate
         run: terraform validate
         working-directory: environments/${{ inputs.environment }}
+
+        # ---- TFLINT ----
+      - name: Setup TFLint
+        uses: terraform-linters/setup-tflint@v4
+
+      - name: Run TFLint
+        run: tflint --init && tflint
+        working-directory: environments/${{ inputs.environment }}
+
+      - name: Run Trivy IaC Scan
+        uses: aquasecurity/trivy-action@0.20.0
+        with:
+          scan-type: 'config'
+          scan-ref: '.'
+          severity: 'HIGH,CRITICAL'
+          exit-code: '1'
 
       - name: Terraform Plan
         if: inputs.action == 'plan'
@@ -45,7 +61,7 @@ jobs:
         working-directory: environments/${{ inputs.environment }}
 
       - name: Terraform Apply
-        if: inputs.action == 'apply'
+        if: inputs.action == 'apply' && github.ref == 'refs/heads/main'
         run: terraform apply -auto-approve
         working-directory: environments/${{ inputs.environment }}
 
@@ -53,4 +69,3 @@ jobs:
         if: inputs.action == 'destroy'
         run: terraform destroy -auto-approve
         working-directory: environments/${{ inputs.environment }}
-

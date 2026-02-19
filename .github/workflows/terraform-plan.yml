@@ -15,5 +15,5 @@ jobs:
     with:
       environment: dev
       action: plan
-    secrets:
+    secrets:       # pragma: allowlist secret
       inherit

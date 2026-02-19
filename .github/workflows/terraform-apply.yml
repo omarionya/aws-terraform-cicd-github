@@ -15,5 +15,4 @@ jobs:
     with:
       environment: prod
       action: apply
-    secrets:
-      inherit
+    secrets: inherit # pragma: allowlist secret

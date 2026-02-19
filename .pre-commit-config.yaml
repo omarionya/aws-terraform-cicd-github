@@ -1,0 +1,30 @@
+repos:
+  # Terraform hooks
+  - repo: https://github.com/antonbabenko/pre-commit-terraform
+    rev: v1.88.0
+    hooks:
+      - id: terraform_fmt
+        args: [--args=-recursive]
+
+      - id: terraform_validate
+
+      - id: terraform_tflint
+        args: [--args=--recursive]
+
+      - id: terraform_trivy
+        args:
+          - --args=--severity HIGH,CRITICAL
+
+  # YAML validation (checks your GitHub workflows)
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: check-yaml
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+
+  # Detect accidental secrets
+  - repo: https://github.com/Yelp/detect-secrets
+    rev: v1.4.0
+    hooks:
+      - id: detect-secrets # pragma: allowlist secret
