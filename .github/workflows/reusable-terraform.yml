@@ -25,11 +25,11 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
 
-      #- name: Configure AWS Credentials (OIDC)
-        # uses: aws-actions/configure-aws-credentials@v2
-        # with:
-        # role-to-assume: arn:aws:iam::ACCOUNT-ID:role/ROLE-NAME
-        # aws-region: us-east-1
+      - name: Configure AWS Credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: arn:aws:iam::919466768129:role/allow-github-actions
+          aws-region: us-east-1
 
       - name: Terraform Init (skip backend)
         run: terraform init -reconfigure
@@ -41,7 +41,7 @@ jobs:
 
         # ---- TFLINT ----
       - name: Setup TFLint
-        uses: terraform-linters/setup-tflint@v3
+        uses: terraform-linters/setup-tflint@v4
 
       - name: Run TFLint
         run: tflint --init && tflint
@@ -69,4 +69,3 @@ jobs:
         if: inputs.action == 'destroy'
         run: terraform destroy -auto-approve
         working-directory: environments/${{ inputs.environment }}
-

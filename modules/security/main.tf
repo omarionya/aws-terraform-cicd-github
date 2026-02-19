@@ -1,8 +1,22 @@
+terraform {
+  required_version = ">= 1.5.0"
+
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 5.0"
+    }
+  }
+}
+
+
 resource "aws_security_group" "web_sg" {
-  name   = "${var.environment}-web-sg"
-  vpc_id = var.vpc_id
+  description = "Security group for web server"
+  name        = "${var.environment}-web-sg"
+  vpc_id      = var.vpc_id
 
   ingress {
+    description = "Allow HTTP from specific IP"
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"
@@ -10,6 +24,7 @@ resource "aws_security_group" "web_sg" {
   }
 
   ingress {
+    description = "Allow SSH from specific IP"
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
@@ -17,6 +32,7 @@ resource "aws_security_group" "web_sg" {
   }
 
   egress {
+    description = "Allow all outbound traffic"
     from_port   = 0
     to_port     = 0
     protocol    = "-1"

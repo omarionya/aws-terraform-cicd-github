@@ -29,8 +29,9 @@ terraform.rc
 # OS files
 .DS_Store
 Thumbs.db
+# hcl lock file
+.terraform.lock.hcl
 
 # IDE folders
 .vscode/
 .idea/
-
