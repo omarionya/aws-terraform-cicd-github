@@ -58,11 +58,34 @@ resource "aws_cloudwatch_log_group" "vpc_flow_logs" {
   kms_key_id        = aws_kms_key.cw_logs.arn
 }
 
+resource "aws_iam_role" "flow_logs_role" {
+  name = "vpc-flow-logs-role"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = "sts:AssumeRole"
+        Effect = "Allow"
+        Principal = {
+          Service = "vpc-flow-logs.amazonaws.com"
+        }
+      }
+    ]
+  })
+}
+
+resource "aws_iam_role_policy_attachment" "flow_logs_attach" {
+  role       = aws_iam_role.flow_logs_role.name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonVPCCFlowLogsRole"
+}
+
 resource "aws_flow_log" "vpc_flow" {
   vpc_id               = aws_vpc.this.id
   traffic_type         = "ALL"
   log_destination      = aws_cloudwatch_log_group.vpc_flow_logs.arn
   log_destination_type = "cloud-watch-logs"
+  iam_role_arn         = aws_iam_role.flow_logs_role.arn
 }
 
 resource "aws_subnet" "public" {
