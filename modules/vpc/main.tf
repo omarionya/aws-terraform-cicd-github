@@ -77,7 +77,7 @@ resource "aws_iam_role" "flow_logs_role" {
 
 resource "aws_iam_role_policy_attachment" "flow_logs_attach" {
   role       = aws_iam_role.flow_logs_role.name
-  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonVPCCFlowLogsRole"
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonVPCFlowLogsRole"
 }
 
 resource "aws_flow_log" "vpc_flow" {
